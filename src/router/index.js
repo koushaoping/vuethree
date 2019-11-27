@@ -4,6 +4,8 @@ import HelloWorld from '@/components/HelloWorld'
 import first from '@/components/first'
 import two from '@/components/two'
 import three from '@/components/three'
+import teacher from '@/components/teacher'
+
 Vue.use(Router)
 export default
 new Router({
@@ -27,6 +29,11 @@ new Router({
             path: '/three',
             name: 'three',
             component: three
+        },
+        {
+            path: '/teacher',
+            name: 'teacher',
+            component: teacher
         }
     ]
 })

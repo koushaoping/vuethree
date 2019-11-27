@@ -7,20 +7,15 @@
     </el-carousel>
     <div class="title">
       <div class="one">
-        <div class="box1">年级
-          <span>高三</span>
+        <div class="box1" >年级
+          <span @click="showvalue">小升初</span>
+          <span @click="showvalue">初升高</span>
         </div>
         <div class="box2">课程
-          <span>全部</span>
-          <span>语文</span>
-          <span>数学</span>
-          <span>英语</span>
-          <span>物理</span>
-          <span>化学</span>
-          <span>生物</span>
-          <span>政治</span>
-          <span>历史</span>
-          <span>地理</span>
+          <span @click="show">全部</span>
+         <span @click="show">语文</span>
+         <span @click="show">数学</span>
+         <span @click="show">英语</span>
         </div>
       </div>
     </div>
@@ -33,7 +28,7 @@
   :visible.sync="dialogVisible"
   width="30%"
   :before-close="handleClose">
-  <span>这是一段信息</span>
+  <span></span>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -42,15 +37,36 @@
 </div>
 
 <div class="list">
+ <el-row>
+        <el-col :span="8" v-for="(tbcourse,index) in allList" :key="index">
+          <el-card >
+            <img :src="tbcourse.tbk_tupian" class="image">
+            <div style="padding: 10px;">
+              <span>{{tbcourse.tbk_name}}</span>
+              <div class="bottom clearfix">
+                <h3> <font color="red">{{tbcourse.tbk_nianji}}</font> </h3>
+                <!-- <el-button type="text" class="button" >操作按钮</el-button> -->
+                 <!-- <el-button type="success" @click="btn(item.name)">操作按钮</el-button> -->
+              </div>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
+  </div>
+  <div class="tab">
+  素养课
+</div>
+<div class="list">
   <el-row>
-  <el-col :span="6" v-for="(o, index) in 4" :key="index" >
+  <el-col :span="8" v-for="(themecourse, index) in List" :key="index" >
     <el-card :body-style="{ padding: '4px' }" >
-      <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
+      <img :src="themecourse.course_detial" class="image">
       <div style="padding: 14px;">
-        <span>好吃的汉堡</span>
+        <span>{{themecourse.course_name}}</span>
         <div class="bottom clearfix">
-          <time class="time">{{ currentDate }}</time>
-          <el-button type="text" class="button">操作按钮</el-button>
+          <span class="time">{{themecourse.course_date}}</span>
+           <h3> <font color="red">{{themecourse.course_time}}</font> </h3>
+         
         </div>
       </div>
     </el-card>
@@ -58,37 +74,19 @@
 </el-row>
   </div>
   <div class="tab">
-    专题课
+  专题课
 </div>
 <div class="list">
   <el-row>
-  <el-col :span="6" v-for="(o, index) in 4" :key="index" >
+  <el-col :span="8" v-for="( zhuanti, index) in All" :key="index" >
     <el-card :body-style="{ padding: '4px' }" >
-      <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-      <div style="padding: 14px;">
-        <span>好吃的汉堡</span>
+      <img :src=" zhuanti.course_detial" class="image">
+      <div style="padding: 4px;">
+        <span>{{ zhuanti.course_name}}</span>
         <div class="bottom clearfix">
-          <time class="time">{{ currentDate }}</time>
-          <el-button type="text" class="button">操作按钮</el-button>
-        </div>
-      </div>
-    </el-card>
-  </el-col>
-</el-row>
-  </div>
-  <div class="tab">
-    三节课
-</div>
-<div class="list">
-  <el-row>
-  <el-col :span="6" v-for="(o, index) in 4" :key="index" >
-    <el-card :body-style="{ padding: '4px' }" >
-      <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-      <div style="padding: 14px;">
-        <span>好吃的汉堡</span>
-        <div class="bottom clearfix">
-          <time class="time">{{ currentDate }}</time>
-          <el-button type="text" class="button">操作按钮</el-button>
+          <span class="time">{{ zhuanti.course_date}}</span>
+           <h3> <font color="red">{{ zhuanti.course_time}}</font> </h3>
+         
         </div>
       </div>
     </el-card>
@@ -110,10 +108,27 @@ export default {
         { url: require("../assets/banner2.png") },
         { url: require("../assets/banner3.jpg") },
         { url: require("../assets/banner4.jpg") }
-      ]
+      ],
+        allList:[],
+        List:[],
+        All:[],
+      tbcourse:[],
+      themecourse:[],
+      zhuanti:[],
+      x:[],
+      e:[],
+     
     };
   },
-    methods: {
+  methods: {
+       showvalue(event){
+                var e = event.currentTarget.innerHTML;
+                console.log(e)
+            },
+            show(ntp){
+                var x = event.currentTarget.innerHTML;
+                console.log(x)
+            },
       handleClose(done) {
         this.$confirm('确认关闭？')
           .then(_ => {
@@ -121,7 +136,40 @@ export default {
           })
           .catch(_ => {});
       }
+    },
+  created() {
+      // console.log(this.$route);
+      // this.id=this.$route.query.nav;
+     
+       this.$http.get('/bjq/Tbk/selTbk',{
+           params:{
+            kemu: 'x',
+            nianji: 'e'
+        }
+       }).then(res=>{
+        console.log(res);
+        this.allList=res.data.data;
+        // this.tbcourse=res.data.data;
+      }),
+       this.$http.get('/api/suya').then(res=>{
+        console.log(res);
+        this.List=res.data.data;
+
+      }),
+       this.$http.get('/api/zhuant',{
+         params:{
+           course_grade:'小升初',
+           course_subject:'语文'
+         }
+       }).then(res=>{
+        console.log(res);
+        this.All=res.data.data;
+       
+
+      })
     }
+     
+    
     
 };
 
@@ -146,6 +194,11 @@ export default {
   background-color: white;
   
 }
+.time{
+  width: 90%;
+  height: 30px;
+  margin-top: -3px;
+}
 .one{
   width: 90%;
   height: 100px;
@@ -165,6 +218,11 @@ export default {
 }
 .box1 span:hover{
   color: red;
+}
+.el-card{
+  width: 90%;
+  margin-top: 10px;
+  
 }
 .box2{
   width: 100%;
@@ -208,6 +266,9 @@ export default {
 .list{
   width: 90%;
   margin:20px auto;
+}
+.list :hover{
+  margin-top: -3px;
 }
  .time {
     font-size: 13px;
