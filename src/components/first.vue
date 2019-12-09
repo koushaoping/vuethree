@@ -1,4 +1,8 @@
 <template>
+<div>
+
+
+<top/>
   <div class="banner">
     <el-carousel :interval="5000" arrow="always">
       <el-carousel-item v-for="(item,index) in item" :key="index">
@@ -39,14 +43,14 @@
 <div class="list">
  <el-row>
         <el-col :span="8" v-for="(tbcourse,index) in allList" :key="index">
-          <el-card >
+          <el-card>
             <img :src="tbcourse.tbk_tupian" class="image">
             <div style="padding: 10px;">
               <span>{{tbcourse.tbk_name}}</span>
               <div class="bottom clearfix">
                 <h3> <font color="red">{{tbcourse.tbk_nianji}}</font> </h3>
                 <!-- <el-button type="text" class="button" >操作按钮</el-button> -->
-                 <!-- <el-button type="success" @click="btn(item.name)">操作按钮</el-button> -->
+                 <el-button  @click="btn(tbcourse.tbk_name,tbcourse.tbk_nianji)">进入课程</el-button>
               </div>
             </div>
           </el-card>
@@ -95,10 +99,17 @@
   </div>
 </div>
   </div>
-  
+  <end/>
+  </div>
 </template>
 <script>
+import top from "../components/city";
+import end from "../components/footer";
 export default {
+  components: {
+    top,
+     end,
+  },
   data() {
     return {
       currentDate:'2019-11-19',
@@ -114,20 +125,19 @@ export default {
         All:[],
       tbcourse:[],
       themecourse:[],
-      zhuanti:[],
-      x:[],
-      e:[],
-     
+      zhuanti:[],     
     };
   },
   methods: {
        showvalue(event){
                 var e = event.currentTarget.innerHTML;
                 console.log(e)
+                this.$router.push({params: {y:e}})
             },
             show(ntp){
                 var x = event.currentTarget.innerHTML;
                 console.log(x)
+                this.$router.push({params: {z:x}})
             },
       handleClose(done) {
         this.$confirm('确认关闭？')
@@ -135,16 +145,25 @@ export default {
             done();
           })
           .catch(_ => {});
-      }
+      },
+       btn(res,val){
+       console.log(res)
+       console.log(val)
+      //  this.$router.push('/two?info='+res+'km='+val);
+       this.$router.push({ name: 'two', params: { info:res, km:val }})
+    }
     },
+   
   created() {
       // console.log(this.$route);
-      // this.id=this.$route.query.nav;
-     
+      // this.name=this.$route.query.nav;
+    //  this.nm=this.$route.params.y;
+    //  this.em=this.$route.params.z;
+    //  console.log
        this.$http.get('/bjq/Tbk/selTbk',{
            params:{
-            kemu: 'x',
-            nianji: 'e'
+            kemu: '数学',
+            nianji: '小升初'
         }
        }).then(res=>{
         console.log(res);
@@ -164,8 +183,6 @@ export default {
        }).then(res=>{
         console.log(res);
         this.All=res.data.data;
-       
-
       })
     }
      
@@ -193,6 +210,10 @@ export default {
   height:100px;
   background-color: white;
   
+}
+.el-button{
+  background-color: #ff4830;
+  float: right;
 }
 .time{
   width: 90%;
@@ -228,7 +249,7 @@ export default {
   width: 100%;
   height: 30px;
   text-align: left;
- 
+  margin-top: 10px;
 }
 .box2 span{
   margin-left: 15px;
@@ -238,7 +259,7 @@ export default {
 }
 .all{
   width: 100%;
-  margin-top: -40px;
+  margin-top: -30px;
   background-color: rgb(216, 216, 216);
 }
 .tab{
@@ -267,9 +288,9 @@ export default {
   width: 90%;
   margin:20px auto;
 }
-.list :hover{
+/* .list :hover{
   margin-top: -3px;
-}
+} */
  .time {
     font-size: 13px;
     color: #999;

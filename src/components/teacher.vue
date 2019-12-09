@@ -67,7 +67,7 @@ export default {
  }
  .el-card{
      width: 90%;
-     height: 230px;
+     height: 200px;
      margin-top: 15px;
  }
  .univercity{

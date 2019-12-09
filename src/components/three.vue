@@ -27,14 +27,10 @@
 <div class="two">立即报名</div>
         </div>
       </div>
-      <div class="dagang">
-        <div class="xiangqing">课程大纲及课程详情</div>
-        <div>
-        
-        </div>
-      </div>
     </div>
-    
+    <div class="dagang">
+        <div class="xiangqing">课程大纲及课程详情</div>
+      </div>
   </div>
 </template>
 <script>
@@ -175,5 +171,21 @@ float: right;
   color: white;
   float: right;
  background-color: rgb(241, 43, 43);
+}
+.dagang{
+  width: 90%;
+  height: 700px;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+.xiangqing{
+  width: 90%;
+  height: 50px;
+  float: left;
+  text-align: left;
+  font-size: 24px;
+  line-height: 25px;
 }
 </style>

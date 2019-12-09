@@ -51,10 +51,15 @@ export default {
       };
     },
   created(){
-      this.$http.get('/bjq/Tbk/selAllTbk',{
+    // console.log(this.$route.params)
+    this.grade=this.$route.params.info;
+    this.subject=this.$route.params.km;
+    console.log(this.grade)
+    console.log(this.subject)
+    this.$http.get('/bjq/Tbk/selAllTbk',{
          params:{
-           course_grade:'小升初',
-           course_subject:'数学'
+           course_grade:this.subject,
+           course_subject:this.grade
          }
       }).then(res=>{
         console.log(res);
